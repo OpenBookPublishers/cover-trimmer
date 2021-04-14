@@ -8,7 +8,7 @@ from src.pdf import Pdf
 
 class TestPdf(unittest.TestCase):
     def setUp(self):
-        self.doc = Pdf(path.abspath('test/test.pdf'))
+        self.doc = Pdf(path.abspath('test/cover.pdf'))
 
     def test_set_cropbox(self):
         self.doc.set_cropbox([748, 9, 1190, 672])
