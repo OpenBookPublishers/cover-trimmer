@@ -13,8 +13,14 @@ class Config:
     def __init__(self, config_path, cover_type):
         self.cover_type = cover_type
 
-        with open(config_path) as json_file:
-            self.config = json.load(json_file)
+        try:
+            json_file = open(config_path)
+        except FileNotFoundError as e:
+            print(f'Configuration json file path is inaccurate.\n{e}')
+            raise
+        else:
+            with json_file:
+                self.config = json.load(json_file)
 
     def get_cover_geometry(self):
         '''

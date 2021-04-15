@@ -9,7 +9,7 @@ import imghdr
 from src.img import Img
 
 
-class TestPdf(unittest.TestCase):
+class TestImg(unittest.TestCase):
     def setUp(self):
         self.temp_dir = tempfile.mkdtemp()
         self.img = Img(path.abspath('test/cover-cropped.pdf'),
