@@ -8,8 +8,7 @@ from config import Config
 
 
 def main():
-    # DEV
-    pdf_path = path.abspath('test.pdf')
+    pdf_path = path.abspath('cover.pdf')
     out_folder = path.abspath('out')
     config_path = path.abspath('config.json')
 
