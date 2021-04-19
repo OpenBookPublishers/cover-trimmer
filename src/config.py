@@ -24,13 +24,25 @@ class Config:
 
     def get_cover_geometry(self):
         '''
-        Get cover geomtry
+        Get cover geometry
 
         This method returns a python list with value to build a
         fitz.rect() object
         '''
 
-        return self.config.get('cover_geometry', {}).get(self.cover_type)
+        geometry_presets = self.config.get('cover_geometry', {})
+        if len(geometry_presets) == 0:
+            raise Exception("Dictionary key 'cover_geometry' empty or "
+                            "absent in config file 'config.json'. "
+                            "Please, fix the config file.")
+
+        cover_geometry = geometry_presets.get(self.cover_type, None)
+        if cover_geometry is None:
+            raise Exception(f"Dictionary key '{self.cover_type}' not found "
+                            "in config file 'config.json'. "
+                            "Possibly a typo in the input argument.")
+
+        return cover_geometry
 
     def get_output_width(self):
         '''

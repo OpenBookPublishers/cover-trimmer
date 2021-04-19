@@ -19,6 +19,30 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(self.config.get_cover_geometry(),
                          [748, 9, 1190, 672])
 
+        # 'cover_geometry' is empty
+        self.config.config['cover_geometry'] = {}
+        with self.assertRaises(Exception) as e:
+            self.config.get_cover_geometry()
+        self.assertTrue(e, e.exception)
+
+        # 'cover_geometry' is absent
+        self.config.config.pop('cover_geometry', None)
+        with self.assertRaises(Exception) as e:
+            self.config.get_cover_geometry()
+        self.assertTrue(e, e.exception)
+
+        # cover_type value wrong/not present in 'cover_geometry'
+        self.config.cover_type = 'royaloctavoooo'
+        with self.assertRaises(Exception) as e:
+            self.config.get_cover_geometry()
+        self.assertTrue(e, e.exception)
+
+        # cover_type value is empty
+        self.config.cover_type = ''
+        with self.assertRaises(Exception) as e:
+            self.config.get_cover_geometry()
+        self.assertTrue(e, e.exception)
+
     def test_get_output_width(self):
         self.assertEqual(self.config.get_output_width(),
                          [1200])
