@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import unittest
-from pdf2image import convert_from_path
 from os import path
 import tempfile
 import shutil
