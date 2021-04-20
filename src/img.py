@@ -15,10 +15,10 @@ class Img:
         self.output_folder = output_folder
 
     def convert(self, width):
-        cover = convert_from_path(self.pdf_cover,
-                                  single_file=True,
-                                  output_folder=self.output_folder,
-                                  use_cropbox=True,
-                                  size=(None, width),
-                                  fmt='jpg',
-                                  output_file=f'cover-{width}px')
+        convert_from_path(self.pdf_cover,
+                          single_file=True,
+                          output_folder=self.output_folder,
+                          use_cropbox=True,
+                          size=(None, width),
+                          fmt='jpg',
+                          output_file=f'cover-{width}px')
