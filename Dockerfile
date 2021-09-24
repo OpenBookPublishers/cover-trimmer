@@ -16,4 +16,4 @@ COPY ./src/ ./
 
 ENV cover_type royaloctavo
 
-CMD python main.py ${cover_type}
+CMD python main.py ${cover_type} --output_width ${OUTPUT_WIDTH}
