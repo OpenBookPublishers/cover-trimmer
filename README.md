@@ -17,13 +17,15 @@ docker run --rm \
     -v /path/to/cover.pdf:/cover/cover.pdf \
     -v /path/to/out/:/cover/out \
     -e cover_type=royaloctavo \
+    -e OUTPUT_WIDTH=1200 \
     openbookpublishers/cover-trimmer
 ```
 where:
 
  - `/path/to/cover.pdf` is the path of the input cover;
  - `/path/to/out/` is the path to the output directory;
- - `cover_type` environment variable is the name of the trimming preset you require, picking from the ones reported in the `config.json` config file.
+ - `cover_type` environment variable is the name of the trimming preset you require, picking from the ones reported in the `config.json` config file;
+ - `OUTPUT_WITH` environment variable defines the width of the output image.
 
 # Personalization
 ## Cover size
@@ -45,24 +47,6 @@ docker run --rm \
     -v /path/to/out/:/cover/out \
     -v /path/to/config.json:/cover/config.json \
     -e cover_type=your_new_preset_name \
-    openbookpublishers/cover-trimmer
-```
-
-## Image size
-You can define as many widths you wish for your image output(s). This is performed, once again, adding width sizes to the config file `config.json` (units are expressed in pixels).
-
-```
-    [...]
-    "output_width" : [1200, 800, 200]
-}
-```
-Make sure you add your new config file when you run the container:
-
-```
-docker run --rm \
-    -v /path/to/cover.pdf:/cover/cover.pdf \
-    -v /path/to/out/:/cover/out \
-    -v /path/to/config.json:/cover/config.json \
-    -e cover_type=royaloctavo \
+    -e OUTPUT_WIDTH=1200 \
     openbookpublishers/cover-trimmer
 ```
