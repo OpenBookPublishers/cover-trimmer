@@ -6,9 +6,16 @@ from thothlibrary import ThothClient
 # from pdf import Pdf
 # from img import Img
 
-MAP = {('156.0', '234.0'): [748, 9, 1190, 672], # royal octavo
-       ('210.0', '297.0'): [892, 9, 1487, 851], # A4
-       ('178.0', '245.0'): [264, 3, 441, 257]} # 7x10
+MAP = {'royaloctavo' : {'width': 156.0,
+                        'height': 234.0,
+                        'geometry': [748, 9, 1190, 672]},
+       'a4'          : {'width': 210.0,
+                        'height': 297.0,
+                        'geometry': [892, 9, 1487, 851]},
+       '7x10'        : {'width': 178.0,
+                        'height': 254.0,
+                        'geometry': [264, 3, 441, 257]}
+       }
 
 def main():
     pdf_path = path.abspath('cover.pdf')
@@ -21,12 +28,21 @@ def main():
                         help='Define output image width')
     args = parser.parse_args()
 
+
     thoth = ThothClient(version="0.6.0")
     query = thoth.query('workByDoi',
                         {'doi':f'"https://doi.org/10.11647/{args.doi}"'})
 
-    width = query['width']
-    height = query['height']
+    
+    for size, data in MAP.items():
+        if data['width'] == query['width'] and \
+           data['height'] == query['height']:
+            geometry = data['geometry']
+            break
+    else:
+        raise 'Size not found in MAP'
+
+    print(geometry)
 
     # config = Config(config_path, cover_type=args.cover_type)
 
