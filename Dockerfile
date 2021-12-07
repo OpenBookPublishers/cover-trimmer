@@ -14,6 +14,6 @@ RUN rm requirements.txt
 
 COPY ./src/ ./
 
-ENV cover_type royaloctavo
+ENTRYPOINT ["python3"]
 
-CMD python main.py ${cover_type} --output_width ${OUTPUT_WIDTH}
+CMD ["run_thoth.py", "--help"]
