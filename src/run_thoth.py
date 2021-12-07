@@ -33,7 +33,11 @@ def main():
     query = thoth.query('workByDoi',
                         {'doi':f'"https://doi.org/10.11647/{args.doi}"'})
 
-    
+    if not query['width'] and \
+       not query['height']:
+        raise 'Cover size not defined in Thoth'
+
+
     for size, data in MAP.items():
         if data['width'] == query['width'] and \
            data['height'] == query['height']:
