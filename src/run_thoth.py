@@ -3,8 +3,8 @@ from os import path
 import argparse
 from thothlibrary import ThothClient
 
-# from pdf import Pdf
-# from img import Img
+from pdf import Pdf
+from img import Img
 
 MAP = {'royaloctavo' : {'width': 156.0,
                         'height': 234.0,
@@ -14,7 +14,7 @@ MAP = {'royaloctavo' : {'width': 156.0,
                         'geometry': [892, 9, 1487, 851]},
        '7x10'        : {'width': 178.0,
                         'height': 254.0,
-                        'geometry': [264, 3, 441, 257]}
+                        'geometry': [747, 9, 1251, 728]}
        }
 
 def main():
@@ -42,15 +42,12 @@ def main():
     else:
         raise 'Size not found in MAP'
 
-    print(geometry)
 
-    # config = Config(config_path, cover_type=args.cover_type)
+    pdf = Pdf(pdf_path)
+    pdf.set_cropbox(geometry)
 
-    # pdf = Pdf(pdf_path)
-    # pdf.set_cropbox(config.get_cover_geometry())
-
-    # img = Img(pdf.cover.name, output_folder=out_folder)
-    # img.convert(args.output_width)
+    img = Img(pdf.cover.name, output_folder=out_folder)
+    img.convert(args.output_width)
 
 
 if __name__ == '__main__':
