@@ -3,8 +3,7 @@ from os import path
 import argparse
 from thothlibrary import ThothClient
 
-from pdf import Pdf
-from img import Img
+from cover_trimmer import Trimmer
 
 MAP = {'royaloctavo' : {'width': 156.0,
                         'height': 234.0,
@@ -47,11 +46,9 @@ def main():
         raise 'Size not found in MAP'
 
 
-    pdf = Pdf(pdf_path)
-    pdf.set_cropbox(geometry)
-
-    img = Img(pdf.cover.name, output_folder=out_folder)
-    img.convert(args.output_width)
+    trimmer = Trimmer(pdf_path, output_folder=out_folder)
+    trimmer.set_cropbox(geometry)
+    trimmer.convert(args.output_width)
 
 
 if __name__ == '__main__':
