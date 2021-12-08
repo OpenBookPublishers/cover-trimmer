@@ -17,7 +17,7 @@ docker run --rm \
     -v /path/to/cover.pdf:/cover/cover.pdf \
     -v /path/to/out/:/cover/out \
     openbookpublishers/cover-trimmer \
-    run_thoth.py --doi obp.0231 --output_width 1875
+    thoth_wrapper.py --doi obp.0231 --output_width 1875
 ```
 where:
 

@@ -16,4 +16,4 @@ COPY ./src/ ./
 
 ENTRYPOINT ["python3"]
 
-CMD ["run_thoth.py", "--help"]
+CMD ["thoth_wrapper.py", "--help"]
