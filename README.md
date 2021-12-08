@@ -1,8 +1,8 @@
 # Description
 
-cover-trimmer is a tool to trim book cover artworks and output front cover images.
+cover-trimmer is a tool to trim book cover artworks (PDF) and output front cover images (JPEG). The tool is made up of a single module: `./src/cover_trimmer.py`. This can be used as you please.
 
-The tool takes PDF cover artworks as input and outputs jpeg images scaled at different width sizes. These output sizes are specified in a config file, making this tool easy to customise.
+The repository offers a thoth wrapper in `./src/tun_thoth.py`, which is able to retrieve info about cover size from thoth and use this data to trim cover to the right size.
 
 # Run in docker
 This tool runs in docker. Images can be built with this command:
@@ -16,37 +16,31 @@ and containers run with:
 docker run --rm \
     -v /path/to/cover.pdf:/cover/cover.pdf \
     -v /path/to/out/:/cover/out \
-    -e cover_type=royaloctavo \
-    -e OUTPUT_WIDTH=1200 \
-    openbookpublishers/cover-trimmer
+    openbookpublishers/cover-trimmer \
+    thoth_wrapper.py --doi obp.0231 --output_width 1875
 ```
 where:
 
  - `/path/to/cover.pdf` is the path of the input cover;
  - `/path/to/out/` is the path to the output directory;
- - `cover_type` environment variable is the name of the trimming preset you require, picking from the ones reported in the `config.json` config file;
- - `OUTPUT_WITH` environment variable defines the width of the output image.
+
+
+# Tests
+Run tests as:
+```
+docker build . -f Dockerfile.test -t openbookpublishers/cover-trimmer:test && \
+docker run openbookpublishers/cover-trimmer:test
+```
 
 # Personalization
 ## Cover size
-You can personalise the config file to trim covers at the size you require. The config file looks like this:
+The PDF cover artwork might come at different size. A geometry must be specified for the tool to work properly.
 
 ```
-{
-    "cover_geometry" : {
-	    "royaloctavo" : [748, 9, 1190, 672],
-        [...]
-```
-You can add a new entry to the `cover_geometry` key, specifying a new name for your preset and the [PyMuPDF Rect() coordinates](https://pymupdf.readthedocs.io/en/latest/rect.html) you require (units are expressed in points).
+geometry = [748, 9, 1190, 672]
 
-Finally, you can run the container with your personalised config file like so:
-
+trimmer = Trimmer(pdf_path, output_folder=out_folder)
+trimmer.set_cropbox(geometry)
+trimmer.convert(args.output_width)
 ```
-docker run --rm \
-    -v /path/to/cover.pdf:/cover/cover.pdf \
-    -v /path/to/out/:/cover/out \
-    -v /path/to/config.json:/cover/config.json \
-    -e cover_type=your_new_preset_name \
-    -e OUTPUT_WIDTH=1200 \
-    openbookpublishers/cover-trimmer
-```
+The page geometry is a python list with the [PyMuPDF Rect() coordinates](https://pymupdf.readthedocs.io/en/latest/rect.html) you require (units are expressed in points).

@@ -1,10 +1,18 @@
 FROM python:3.8.0-slim-buster
 
-WORKDIR /ebook_automation
+WORKDIR /cover-trimmer-tests
 
-RUN pip install flake8==3.7.7
+RUN apt-get update && \
+    apt-get install -y gcc poppler-utils
 
-COPY ./src/ ./src/
-COPY ./test/*.py ./src/
+RUN rm -rf /var/cache/apt/*
 
-RUN flake8 ./src/
+COPY requirements.txt ./
+
+RUN pip install --no-cache-dir -r requirements.txt
+RUN rm requirements.txt
+
+COPY ./src/ ./test/
+COPY ./test/ ./test/
+
+CMD ["python", "./test/test-cover-trimmer.py"]
