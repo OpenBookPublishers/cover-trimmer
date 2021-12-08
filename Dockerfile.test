@@ -1,10 +1,13 @@
 FROM python:3.8.0-slim-buster
 
-WORKDIR /ebook_automation
+WORKDIR /cover-trimmer-tests
 
-RUN pip install flake8==3.7.7
+COPY requirements.txt ./
 
-COPY ./src/ ./src/
-COPY ./test/*.py ./src/
+RUN pip install --no-cache-dir -r requirements.txt
+RUN rm requirements.txt
 
-RUN flake8 ./src/
+COPY ./src/ ./test/
+COPY ./test/ ./test/
+
+CMD ["python", "./test/test-cover-trimmer.py"]
