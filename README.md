@@ -24,6 +24,14 @@ where:
  - `/path/to/cover.pdf` is the path of the input cover;
  - `/path/to/out/` is the path to the output directory;
 
+
+# Tests
+Run tests as:
+```
+docker build . -f Dockerfile.test -t openbookpublishers/cover-trimmer:test && \
+docker run openbookpublishers/cover-trimmer:test
+```
+
 # Personalization
 ## Cover size
 The PDF cover artwork might come at different size. A geometry must be specified for the tool to work properly.
