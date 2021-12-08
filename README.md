@@ -1,6 +1,6 @@
 # Description
 
-cover-trimmer is a tool to trim book cover artworks (PDF) and output front cover images (JPEG). At present, the tool is made up of two modules: img and pdf. This can be used as you please.
+cover-trimmer is a tool to trim book cover artworks (PDF) and output front cover images (JPEG). The tool is made up of a single module: `./src/cover_trimmer.py`. This can be used as you please.
 
 The repository offers a thoth wrapper in `./src/tun_thoth.py`, which is able to retrieve info about cover size from thoth and use this data to trim cover to the right size.
 
@@ -31,7 +31,8 @@ The PDF cover artwork might come at different size. A geometry must be specified
 ```
 geometry = [748, 9, 1190, 672]
 
-pdf = Pdf(pdf_path)
-pdf.set_cropbox(geometry)
+trimmer = Trimmer(pdf_path, output_folder=out_folder)
+trimmer.set_cropbox(geometry)
+trimmer.convert(args.output_width)
 ```
 The page geometry is a python list with the [PyMuPDF Rect() coordinates](https://pymupdf.readthedocs.io/en/latest/rect.html) you require (units are expressed in points).
