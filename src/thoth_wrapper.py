@@ -34,7 +34,7 @@ def main():
 
     if not query['width'] and \
        not query['height']:
-        raise 'Cover size not defined in Thoth'
+        raise ValueError('Cover size is not defined in Thoth (blank fields).')
 
 
     for size, data in MAP.items():
@@ -43,8 +43,17 @@ def main():
             geometry = data['geometry']
             break
     else:
-        raise 'Size not found in MAP'
+        message = 'Width: {}\n'.format(query['width']) + \
+                  'Height: {}\n'.format(query['height']) + \
+                  'Dimensions retrieved from Thoth do not match ' + \
+                  'local presets mapped in MAP. Dimensions defined in ' + \
+                  'Thoth are either incorrect or not yet supported by ' + \
+                  'this software.'
 
+        if query['width'] > query['height']:
+            message += '\n\nNOTE: width value greater than height.'
+
+        raise ValueError(message)
 
     trimmer = Trimmer(pdf_path, output_folder=out_folder)
     trimmer.set_cropbox(geometry)
