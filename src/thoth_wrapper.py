@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from os import path
+from urllib.parse import urljoin
 import argparse
 from thothlibrary import ThothClient
 
@@ -27,10 +28,11 @@ def main():
                         help='Define output image width')
     args = parser.parse_args()
 
+    doi_url = urljoin('https://doi.org/', args.doi)
 
     thoth = ThothClient(version="0.6.0")
     query = thoth.query('workByDoi',
-                        {'doi':f'"https://doi.org/10.11647/{args.doi}"'})
+                        {'doi': f'"{doi_url}"'})
 
     if not query['width'] and \
        not query['height']:
