@@ -1,18 +1,33 @@
-# Description
+# cover-trimmer
 
-cover-trimmer is a tool to trim book cover artworks (PDF) and output front cover images (JPEG). The tool is made up of a single module: `./src/cover_trimmer.py`. This can be used as you please.
+cover-trimmer is a python library for trimming PDF cover artworks and outputting JPEG representations of their front covers.
 
-The repository offers a thoth wrapper in `./src/tun_thoth.py`, which is able to retrieve info about cover size from thoth and use this data to trim cover to the right size.
+## Usage
 
-# Run in docker
-This tool runs in docker. Images can be built with this command:
+```python
+from cover_trimmer import Trimmer
 
+# init Trimmer object
+trimmer = Trimmer(pdf_path, output_folder=out_folder)
+
+# set cropbox to front cover coordinates
+trimmer.set_cropbox([748, 9, 1190, 672])
+
+# trim PDF and output a JPEG 1200 pixels wide
+trimmer.convert(1200)
 ```
-docker build . -t openbookpublishers/cover-trimmer
-```
-and containers run with:
 
-```
+The front page coordinates element is a python list with the [PyMuPDF Rect() set of references](https://pymupdf.readthedocs.io/en/latest/rect.html) you require (units are expressed in points).
+
+### Thoth Wrapper (Optional)
+
+The [Thoth](https://thoth.pub/) wrapper stored at `./src/thoth_wrapper.py` queries the metadata repository to apply the correct cropbox to the PDF cover artworks.
+
+Built the docker container with: $`docker build . -t openbookpublishers/cover-trimmer`
+
+Run the container with:
+
+```bash
 docker run --rm \
     -v /path/to/cover.pdf:/cover/cover.pdf \
     -v /path/to/out/:/cover/out \
@@ -21,26 +36,21 @@ docker run --rm \
 ```
 where:
 
- - `/path/to/cover.pdf` is the path of the input cover;
+ - `/path/to/cover.pdf` is the path of the input PDF cover artwork;
  - `/path/to/out/` is the path to the output directory;
 
 
-# Tests
-Run tests as:
-```
+### Tests
+
+```bash
 docker build . -f Dockerfile.test -t openbookpublishers/cover-trimmer:test && \
 docker run openbookpublishers/cover-trimmer:test
 ```
 
-# Personalization
-## Cover size
-The PDF cover artwork might come at different size. A geometry must be specified for the tool to work properly.
+## Contributing
 
-```
-geometry = [748, 9, 1190, 672]
+Pull requests are welcome.
 
-trimmer = Trimmer(pdf_path, output_folder=out_folder)
-trimmer.set_cropbox(geometry)
-trimmer.convert(args.output_width)
-```
-The page geometry is a python list with the [PyMuPDF Rect() coordinates](https://pymupdf.readthedocs.io/en/latest/rect.html) you require (units are expressed in points).
+## License
+
+[GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html)
