@@ -49,6 +49,6 @@ class Trimmer:
                           single_file=True,
                           output_folder=self.output_folder,
                           use_cropbox=True,
-                          size=(None, width),
+                          size=(width, None),
                           fmt='jpg',
                           output_file=file_name)
