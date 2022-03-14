@@ -14,7 +14,10 @@ MAP = {'royaloctavo' : {'width': 156.0,
                         'geometry': [892, 9, 1487, 851]},
        '7x10'        : {'width': 178.0,
                         'height': 254.0,
-                        'geometry': [747, 9, 1251, 728]}
+                        'geometry': [747, 9, 1251, 728]},
+       '8.5x11'      : {'width': 216.0,
+                        'height': 280.0,
+                        'geometry': [890, 8, 1502, 801]}
        }
 
 def main():
