@@ -14,7 +14,10 @@ MAP = {'royaloctavo' : {'width': 156.0,
                         'geometry': [892, 9, 1487, 851]},
        '7x10'        : {'width': 178.0,
                         'height': 254.0,
-                        'geometry': [747, 9, 1251, 728]}
+                        'geometry': [747, 9, 1251, 728]},
+       '8.5x11'      : {'width': 216.0,
+                        'height': 280.0,
+                        'geometry': [890, 8, 1502, 801]}
        }
 
 def main():
@@ -30,9 +33,16 @@ def main():
 
     doi_url = urljoin('https://doi.org/', args.doi)
 
-    thoth = ThothClient(version="0.6.0")
+    thoth = ThothClient(version="0.8.0")
     query = thoth.query('workByDoi',
                         {'doi': f'"{doi_url}"'})
+
+    for publication in query['publications']:
+        if publication['publicationType'] == 'PAPERBACK':
+            pub_id = publication.get('publicationId')
+            break
+
+    query = thoth.query('publication', {'publicationId': f'"{pub_id}"'})
 
     if not query['width'] and \
        not query['height']:
