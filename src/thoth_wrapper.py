@@ -44,6 +44,8 @@ def main():
         if publication['publicationType'] == 'PAPERBACK':
             pub_id = publication.get('publicationId')
             break
+    else:
+        raise ValueError('Paperback edition not defined in Thoth.')
 
     query = thoth.query('publication', {'publicationId': f'"{pub_id}"'})
 
